@@ -1,0 +1,73 @@
+<form class="px-2" [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label for="FormControlInputNome"> Nome</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="FormControlInputNome" 
+          placeholder="Nome"
+          formControlName="nome">
+    </div>
+    <div class="form-group">
+        <label for="FormControlInputCognome"> Cognome</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="FormControlInputCognome" 
+          placeholder="Cognome"
+          formControlName="cognome">
+    </div>
+    <div class="form-group">
+        <label for="FormControlInputEmail"> Indirizzo email</label>
+        <input 
+          type="email" 
+          class="form-control" 
+          id="FormControlInputEmail" 
+          placeholder="nome@example.com"
+          formControlName="email">
+    </div>
+    <span class="help-block" *ngIf="!registrationForm.get('email')?.valid  && registrationForm.get('email')?.touched">
+        Per favore inserisci una email valida!</span>
+    <div class="form-group">
+        <label for="FormControlInputPassword"> Password</label>
+        <input 
+          type="password" 
+          class="form-control" 
+          id="FormControlInputPassword" 
+          formControlName="password">
+    </div>
+    <span class="help-block" *ngIf="!registrationForm.get('password')?.valid && registrationForm.get('password')?.touched">
+        Per favore inserisci una password!</span>
+    <div class="form-group">
+        <label for="FormControlInputNrTessera"> Numero tessera </label>
+        <input  
+            type="number"
+            class="form-control" 
+            id="FormControlInputNrTessera" 
+            placeholder="-"
+            formControlName="numeroTessera">
+    </div>
+    <div class="form-group">
+        <label for="FormControlInputRuolo"> Ruolo </label>
+        <select 
+            class="form-select"
+            id="FormControlInputRuolo" 
+            formControlName="ruolo">
+            <option value=null disabled selected hidden>Scegli ruolo all'interno dell'associazione</option>
+            <option value="AMMINISTRATORE">AMMINISTRATORE</option>
+            <option value="PRESIDENTE">PRESIDENTE</option>
+            <option value="MEMBRO">MEMBRO</option>
+            <option value="TESSERATO">TESSERATO</option>
+          </select>
+    </div>
+    <span class="help-block" *ngIf="!registrationForm.get('ruolo')?.valid && registrationForm.get('ruolo')?.touched">
+        Perfavore definisci un ruolo per questo fauno!</span>    
+    <br>  
+    <button 
+      class="btn btn-success"
+      type="submit"
+      [disabled]="!registrationForm.valid">
+      Inserisci utente
+    </button> 
+    <br><br>
+  </form>
