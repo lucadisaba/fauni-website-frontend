@@ -1,0 +1,75 @@
+<form class="px-2" [formGroup]="updationForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label for="FormControlInputNome"> Nome</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="FormControlInputNome" 
+          placeholder="Nome"
+          formControlName="nome"
+          style="text-transform: capitalize;">
+    </div>
+    <span class="help-block" *ngIf="!updationForm.get('nome')?.valid  && updationForm.get('nome')?.touched">
+      Inserire un nome valido!</span>
+    <div class="form-group">
+        <label for="FormControlInputCognome"> Cognome</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="FormControlInputCognome" 
+          placeholder="Cognome"
+          formControlName="cognome"
+          style="text-transform: capitalize;">
+    </div>
+    <span class="help-block" *ngIf="!updationForm.get('cognome')?.valid  && updationForm.get('cognome')?.touched">
+      Inserire un cognome valido</span>
+    <div class="form-group">
+        <label for="FormControlInputEmail"> Indirizzo email</label>
+        <input 
+          type="email" 
+          class="form-control" 
+          id="FormControlInputEmail" 
+          placeholder="nome@example.com"
+          formControlName="email">
+    </div>
+    <span class="help-block" *ngIf="!updationForm.get('email')?.valid  && updationForm.get('email')?.touched">
+        Per favore inserisci una email valida!</span>
+    <div class="form-group">
+        <label for="FormControlInputNrTessera"> Numero tessera </label>
+        <input  
+            type="number"
+            class="form-control" 
+            id="FormControlInputNrTessera" 
+            placeholder="-"
+            formControlName="numeroTessera">
+    </div>
+    <div class="form-group">
+        <label for="FormControlInputRuolo"> Ruolo </label>
+        <select 
+            class="form-select"
+            id="FormControlInputRuolo" 
+            formControlName="ruolo">
+            <option value=null disabled selected hidden>Scegli ruolo all'interno dell'associazione</option>
+            <option value="AMMINISTRATORE">AMMINISTRATORE</option>
+            <option value="PRESIDENTE">PRESIDENTE</option>
+            <option value="MEMBRO">MEMBRO</option>
+            <option value="TESSERATO">TESSERATO</option>
+          </select>
+    </div>
+    <span class="help-block" *ngIf="!updationForm.get('ruolo')?.valid && updationForm.get('ruolo')?.touched">
+        Perfavore definisci un ruolo per questo fauno!</span>    
+    <br>  
+    <button 
+      class="btn btn-success"
+      type="submit"
+      [disabled]="!updationForm.valid">
+      Aggiorna utente
+    </button>
+    <button 
+      class="btn btn-danger"
+      type="submit"
+      (click)="goBack()">
+      Torna indietro
+    </button>  
+    <br><br>
+  </form>
