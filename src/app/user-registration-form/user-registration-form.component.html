@@ -1,5 +1,5 @@
 
-<form class="px-2" [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+<form class="px-2" [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm.value)">
     <div class="form-group">
         <label for="FormControlInputNome"> Nome</label>
         <input 
@@ -7,8 +7,11 @@
           class="form-control" 
           id="FormControlInputNome" 
           placeholder="Nome"
-          formControlName="nome">
+          formControlName="nome"
+          style="text-transform: capitalize;">
     </div>
+    <span class="help-block" *ngIf="!registrationForm.get('nome')?.valid  && registrationForm.get('nome')?.touched">
+      Inserire un nome valido!</span>
     <div class="form-group">
         <label for="FormControlInputCognome"> Cognome</label>
         <input 
@@ -16,8 +19,11 @@
           class="form-control" 
           id="FormControlInputCognome" 
           placeholder="Cognome"
-          formControlName="cognome">
+          formControlName="cognome"
+          style="text-transform: capitalize;">
     </div>
+    <span class="help-block" *ngIf="!registrationForm.get('cognome')?.valid  && registrationForm.get('cognome')?.touched">
+      Inserire un cognome valido!</span>
     <div class="form-group">
         <label for="FormControlInputEmail"> Indirizzo email</label>
         <input 
@@ -69,6 +75,12 @@
       type="submit"
       [disabled]="!registrationForm.valid">
       Inserisci utente
+    </button>
+    <button 
+      class="btn btn-danger"
+      type="submit"
+      (click)="goBack()">
+      Torna indietro
     </button> 
     <br><br>
   </form>

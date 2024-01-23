@@ -1,35 +1,56 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { CommonModule, Location } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { User } from '../../models/user.model';
+
+type UserNoPass = Omit<User, 'password'>
 
 @Component({
   selector: 'app-user-management',
   standalone: true,
   imports: [
-    CommonModule
+    RouterOutlet,
+    CommonModule,
+    RouterLink
   ],
   templateUrl: './user-management.component.html',
   styleUrl: './user-management.component.css'
 })
-export class UserManagementComponent {
-   
-  users = [
-    { 
-      '#': 1, 
-      Nome: 'luca',
-      Cognome: 'di sabatino',
-      Email: 'luca@gmail.com', 
-      Tessera: '2', 
-      Ruolo: 'AMMINISTRATORE'
-    },
-    { 
-      '#': 2, 
-      Nome: 'jessica',
-      Cognome: 'leone',
-      Email: 'jessica@gmail.com', 
-      Tessera: '1', 
-      Ruolo: 'AMMINISTRATORE'
-    },
-  ]
+export class UserManagementComponent implements OnInit {
+
+  loadedUsers: UserNoPass[] = [];
+
+
+  constructor(private router: Router, private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.fetchUsers()
+  }
+
+  fetchUsers() {
+    this.http.get<UserNoPass[]>('http://localhost:3000/user')
+      .subscribe(users => {
+        // console.log(users);
+        // let orderedUsers = this.orderUsers(users);
+        // console.log('Elementi ordinati');
+        // console.log(orderedUsers)
+        this.loadedUsers = users;
+      })
+  }
   
+  goToAddUser(): void {
+    this.router.navigate(['/user-registration']);
+  } 
+
+  goToUpdateUser(userId: string): void {
+    this.router.navigate(['/user-updation'],
+    { queryParams: { id: userId } });
+  }
+
+  deleteUser(userId: string) {
+      this.http.delete('http://localhost:3000/user/' + userId)
+      .subscribe(() => this.fetchUsers())
+  }
 
 }

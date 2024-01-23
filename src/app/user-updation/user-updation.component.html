@@ -6,8 +6,11 @@
           class="form-control" 
           id="FormControlInputNome" 
           placeholder="Nome"
-          formControlName="nome">
+          formControlName="nome"
+          style="text-transform: capitalize;">
     </div>
+    <span class="help-block" *ngIf="!updationForm.get('nome')?.valid  && updationForm.get('nome')?.touched">
+      Inserire un nome valido!</span>
     <div class="form-group">
         <label for="FormControlInputCognome"> Cognome</label>
         <input 
@@ -15,8 +18,11 @@
           class="form-control" 
           id="FormControlInputCognome" 
           placeholder="Cognome"
-          formControlName="cognome">
+          formControlName="cognome"
+          style="text-transform: capitalize;">
     </div>
+    <span class="help-block" *ngIf="!updationForm.get('cognome')?.valid  && updationForm.get('cognome')?.touched">
+      Inserire un cognome valido</span>
     <div class="form-group">
         <label for="FormControlInputEmail"> Indirizzo email</label>
         <input 
@@ -58,6 +64,12 @@
       type="submit"
       [disabled]="!updationForm.valid">
       Aggiorna utente
-    </button> 
+    </button>
+    <button 
+      class="btn btn-danger"
+      type="submit"
+      (click)="goBack()">
+      Torna indietro
+    </button>  
     <br><br>
   </form>

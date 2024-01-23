@@ -1,6 +1,8 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-registration-form',
@@ -15,18 +17,20 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 export class UserRegistrationFormComponent implements OnInit{
 
   registrationForm!: FormGroup;
-  namePattern = '[a-zA-Z ]*';
+  namePattern = '[A-Za-z]{1}[a-z]+';
+  surnamePattern = '([A-Za-z]{1}([\'][A-Z])?[a-z]+[ ]?)+';
   numericPattern = '[0-9]*';
 
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
     this.registrationForm = new FormGroup({
       'nome': new FormControl(null, [
         Validators.pattern(this.namePattern),
-        Validators.required
+        Validators.required,
       ]),
       'cognome': new FormControl(null, [ 
-        Validators.pattern(this.namePattern),
+        Validators.pattern(this.surnamePattern),
         Validators.required
       ]),
       'email': new FormControl(null, [
@@ -40,15 +44,22 @@ export class UserRegistrationFormComponent implements OnInit{
         Validators.required
       ]),
       'ruolo': new FormControl(null, [
-        Validators.pattern(this.namePattern),
         Validators.required
       ]),
     });
   }
 
-  onSubmit() {
-    console.log(this.registrationForm);
+  onSubmit(postData: {nome: string, cognome: string, email: string,
+     password: string, nrTessera: string, ruolo: string}) {
+    
+    this.http.post('http://localhost:3000/user', postData)
+      .subscribe(responseData => {
+        console.log(responseData);
+      });
   }
 
+  goBack() {
+    this.router.navigate(['/user-management']);
+  }
 
 }
