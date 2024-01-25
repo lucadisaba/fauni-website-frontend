@@ -4,10 +4,12 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { UserRegistrationFormComponent } from './user-registration-form/user-registration-form.component';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { UserUpdationComponent } from './user-updation/user-updation.component';
+import { LogoutComponent } from './logout/logout.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full'},
     { path: 'login', component: LoginFormComponent },
+    { path: 'logout', component: LogoutComponent },
     { path: 'user-management', component: UserManagementComponent },
     { path: 'user-registration', component: UserRegistrationFormComponent },
     { path: 'user-updation', component: UserUpdationComponent },
