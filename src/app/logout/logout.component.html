@@ -1,6 +1,12 @@
 <p>logout works!</p>
+<br>
+<a href="/user-management" *ngIf="isAuthenticated">User-manament</a>
+<br><br>
+<a href="/login" *ngIf="!isAuthenticated">Loggati</a>
+<br><br>
 <button 
       class="btn btn-success"
-      type="submit">
+      type="submit"
+      [disabled]="!isAuthenticated">
       Log out
 </button>

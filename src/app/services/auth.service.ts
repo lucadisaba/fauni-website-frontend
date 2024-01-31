@@ -13,9 +13,14 @@ type UserNoPass = Omit<User, 'password'>
 export class AuthService {
 
   // l'idea è quella di emettere lo user loggato opp. che ha fatto logout
+  // Ci dice in sintesi quando lo stato dello user è cambiato
   authUser = new Subject<AuthorizedUser>;
+  isAuthenticated = false;
 
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient) { 
+    //this.isAuthenticated = !!sessionStorage.getItem('tokenId');
+  }
 
   signIn(email: string, password: string) {
     return this.http.post<AuthResponseData>('http://localhost:3000/user/login', {
@@ -48,5 +53,9 @@ export class AuthService {
     return throwError(errorMessage);
   }
 
+  handleLogout() {
+    sessionStorage.removeItem('tokenId');
+    //this.authUser.next(null);  // Invia un valore nullo per indicare il logout
+  }
 
 }
