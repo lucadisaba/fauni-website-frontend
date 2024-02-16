@@ -1,18 +1,38 @@
 import { Routes } from '@angular/router';
-import { LoginFormComponent } from './login-form/login-form.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { UserRegistrationFormComponent } from './user-registration-form/user-registration-form.component';
-import { UserManagementComponent } from './user-management/user-management.component';
-import { UserUpdationComponent } from './user-updation/user-updation.component';
-import { LogoutComponent } from './logout/logout.component';
+import { UserManagementComponent } from './components/user-management/user-management.component';
+import { UserUpdationComponent } from './components/user-updation/user-updation.component';
+import { AuthPageComponent } from './pages/auth-page/auth-page.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
 
 export const routes: Routes = [
-    { path: '', redirectTo: '/login', pathMatch: 'full'},
-    { path: 'login', component: LoginFormComponent },
-    { path: 'logout', component: LogoutComponent },
-    { path: 'user-management', component: UserManagementComponent },
-    { path: 'user-registration', component: UserRegistrationFormComponent },
-    { path: 'user-updation', component: UserUpdationComponent },
-    { path: 'not-found', component: PageNotFoundComponent, data: {message: 'Page not found!'} },
-    { path: '**', redirectTo: '/not-found' },
+  {
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'full',
+  },
+  { 
+    path: 'auth', 
+    component: AuthPageComponent,
+    //loadComponent: () => import('./pages/auth-page/auth-page.component'),
+    canActivate: []
+},
+{ 
+    path: 'home', 
+    data: { title: 'Home', showInNavbar: true },
+    component: HomePageComponent,
+    //loadComponent: () => import('./pages/home-page/home-page.component'),
+    canActivate: []
+  },
+  {
+    path: 'user-management', 
+    component: UserManagementComponent
+  },
+  { 
+    path: 'user-updation', 
+    component: UserUpdationComponent 
+  },
+  { 
+    path: '**', 
+    redirectTo: 'home' 
+  },
 ];

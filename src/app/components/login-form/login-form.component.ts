@@ -1,16 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Observable } from 'rxjs';
-import { User } from '../../models/user.model';
-import { AuthResponseData } from '../../models/auth-response.model';
+import { User } from '../../../models/user.model';
+import { AuthResponseData } from '../../../models/auth-response.model';
 import { Router } from '@angular/router';
 
 type UserNoPass = Omit<User, 'password'>
 
 @Component({
-  selector: 'app-login-form',
+  selector: 'login-form',
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -45,20 +45,20 @@ export class LoginFormComponent implements OnInit {
     const email = this.loginForm.value.email;
     const password = this.loginForm.value.password;
 
-    let authObs: Observable<AuthResponseData>;
+    // let authObs: Observable<AuthResponseData>;
 
-    authObs = this.authService.signIn(email, password)
+    //authObs = this.authService.requestAccessToken(email, password)
 
-    authObs.subscribe(
-      (resData: AuthResponseData) => {
-        console.log('ris chiamata');
-        console.log(resData['token']);
-        sessionStorage.getItem('tokenId');
-        this.router.navigate(['/logout']);
-    }, errorMessage => {
-        console.log(errorMessage);
-        this.error = errorMessage; 
-    });
+    // authObs.subscribe(
+    //   (resData: AuthResponseData) => {
+    //     console.log('ris chiamata');
+    //     console.log(resData['token']);
+    //     sessionStorage.getItem('tokenId');
+    //     this.router.navigate(['/logout']);
+    // }, errorMessage => {
+    //     console.log(errorMessage);
+    //     this.error = errorMessage; 
+    // });
 
     // redirect to
 

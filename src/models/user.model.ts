@@ -7,3 +7,8 @@ export interface User {
     numeroTessera: number;
     ruolo: string;
 }
+
+export interface UserError {
+    status: number;
+    message: string;
+}

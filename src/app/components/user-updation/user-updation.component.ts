@@ -3,13 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { User } from '../../models/user.model';
 import { first } from 'rxjs';
+import { User } from '../../../models/user.model';
 
 type UserNoPass = Omit<User, 'password'>
 
 @Component({
-  selector: 'app-update-user',
+  selector: 'update-user',
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -32,14 +32,14 @@ export class UserUpdationComponent implements OnInit{
   ngOnInit(): void {
 
     // Popolamento dei dati
-    this.activatedRoute.queryParams.pipe(first())
-      .subscribe(params => {
-        console.log('id letto dai params' + ' ' + params['id']); 
-        this.userId = params['id'];
-      }
-    );
+    // this.activatedRoute.queryParams.pipe(first())
+    //   .subscribe(params => {
+    //     console.log('id letto dai params' + ' ' + params['id']); 
+    //     this.userId = params['id'];
+    //   }
+    // );
 
-    this.fetchUserById(this.userId);
+    //this.fetchUserById(this.userId);
 
     //Reactive form
     this.updationForm = new FormGroup({
@@ -65,28 +65,28 @@ export class UserUpdationComponent implements OnInit{
     });
   }
 
-  fetchUserById(userId: string) {
-    this.http.get<UserNoPass>('http://localhost:3000/user/' + userId).pipe(first())
-      .subscribe(user => {
-        this.loadedUser = user;
-        this.populateForm(this.loadedUser);
-        console.log('il nuovo user caricato nel componente');
-        console.log(this.loadedUser);
-      })
-  }
+  // fetchUserById(userId: string) {
+  //   this.http.get<UserNoPass>('http://localhost:3000/user/' + userId).pipe(first())
+  //     .subscribe(user => {
+  //       this.loadedUser = user;
+  //       this.populateForm(this.loadedUser);
+  //       console.log('il nuovo user caricato nel componente');
+  //       console.log(this.loadedUser);
+  //     })
+  // }
   
-  onSubmit() {
-    this.http.patch('http://localhost:3000/user/' + this.userId, this.updationForm.value)
-    .subscribe(() => console.log('Utente con' + this.userId + 'aggiornato'));
-  }
+  // onSubmit() {
+  //   this.http.patch('http://localhost:3000/user/' + this.userId, this.updationForm.value)
+  //   .subscribe(() => console.log('Utente con' + this.userId + 'aggiornato'));
+  // }
 
-  populateForm(user: UserNoPass) {
-    this.updationForm.patchValue({nome: user.nome});
-    this.updationForm.patchValue({cognome: user.cognome});
-    this.updationForm.patchValue({email: user.email});
-    this.updationForm.patchValue({numeroTessera: user.numeroTessera});
-    this.updationForm.patchValue({ruolo: user.ruolo});
-  } 
+  // populateForm(user: UserNoPass) {
+  //   this.updationForm.patchValue({nome: user.nome});
+  //   this.updationForm.patchValue({cognome: user.cognome});
+  //   this.updationForm.patchValue({email: user.email});
+  //   this.updationForm.patchValue({numeroTessera: user.numeroTessera});
+  //   this.updationForm.patchValue({ruolo: user.ruolo});
+  // } 
 
   goBack() {
     this.router.navigate(['/user-management'])
