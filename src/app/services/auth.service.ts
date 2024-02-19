@@ -1,21 +1,24 @@
-import {
-  HttpClient
-} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, Subject, throwError } from 'rxjs';
 import { AuthorizedUser } from '../../models/auth-user.model';
 import { environment } from '../environments/environment.dev';
 import { AccessToken } from '../../models/auth.models';
+import { AppState } from '../store/app.state';
+import { Store } from '@ngrx/store';
+import { clearUser } from '../store/user/user.actions';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   #http = inject(HttpClient);
+  #store = inject(Store<AppState>);
 
   // l'idea è quella di emettere lo user loggato opp. che ha fatto logout
   // Ci dice in sintesi quando lo stato dello user è cambiato
-  authUser = new Subject<AuthorizedUser>();
+  //authUser = new Subject<AuthorizedUser>();
+  
   #apiUrl = environment.apiUrl;
   #loginEndpoint = '/login';
 
@@ -29,6 +32,16 @@ export class AuthService {
     );
   }
 
+
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem(environment.accessTokenLabel);
+  }
+
+  logout(): void {
+    localStorage.removeItem(environment.accessTokenLabel);
+    this.#store.dispatch(clearUser());
+  }
+  
   // private handleAuthentication(id: string, tokenId: string) {
   //   const authUser = new AuthorizedUser(id, tokenId);
   //   sessionStorage.setItem('tokenId', tokenId);
@@ -48,10 +61,6 @@ export class AuthService {
   //   }
   //   return throwError(() => new Error(errorMessage))
   // }
-
-  isAuthenticated(): boolean {
-        return !!localStorage.getItem(environment.accessTokenLabel);
-    }
 
   // handleLogout() {
   //   sessionStorage.removeItem('tokenId');
