@@ -5,7 +5,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-user-registration-form',
+  selector: 'user-registration-form',
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -49,14 +49,14 @@ export class UserRegistrationFormComponent implements OnInit{
     });
   }
 
-  onSubmit(postData: {nome: string, cognome: string, email: string,
-     password: string, nrTessera: string, ruolo: string}) {
+  // onSubmit(postData: {nome: string, cognome: string, email: string,
+  //    password: string, nrTessera: string, ruolo: string}) {
     
-    this.http.post('http://localhost:3000/user', postData)
-      .subscribe(responseData => {
-        console.log(responseData);
-      });
-  }
+  //   this.http.post('http://localhost:3000/user', postData)
+  //     .subscribe(responseData => {
+  //       console.log(responseData);
+  //     });
+  // }
 
   goBack() {
     this.router.navigate(['/user-management']);

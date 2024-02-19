@@ -1,3 +1,6 @@
+<div class="alert alert-danger" *ngIf="error">
+  <p>{{ error }}</p>
+</div>
 <form class="px-2" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="FormControlInputEmail"> Indirizzo email</label>
@@ -17,7 +20,8 @@
         type="password" 
         class="form-control" 
         id="FormControlInputPassword" 
-        formControlName="password">
+        formControlName="password"
+        minlength="8">
     </div>
     <span class="help-block" *ngIf="!loginForm.get('password')?.valid && loginForm.get('password')?.touched">
       Per favore inserisci una password!</span>
