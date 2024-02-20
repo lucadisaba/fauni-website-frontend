@@ -9,15 +9,13 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Observable, first } from 'rxjs';
-import { User } from '../../../models/user.model';
-import { AuthResponseData } from '../../../models/auth-response.model';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
 import { environment } from '../../environments/environment.dev';
 import { fetchUser } from '../../store/user/user.actions';
 
-type UserNoPass = Omit<User, 'password'>;
+// type UserNoPass = Omit<User, 'password'>;
 
 @Component({
   selector: 'login-form',
@@ -34,17 +32,24 @@ export class LoginFormComponent {
 
   accessTokenLabel = environment.accessTokenLabel;
   homePath = '/home';
-  loginForm!: FormGroup;
+  loginError = '';
+  loginForm!: FormGroup<{
+    email: FormControl<string>;
+    password: FormControl<string>;
+  }>;
 
   constructor() {
-    // TODO: Form Inizialization
+    this.initializeForm();
   }
 
   private initializeForm(): void {
-    this.loginForm = this.#fb.group({
-      email: ['', [Validators.required, Validators.email]],
+    this.loginForm = this.#fb.nonNullable.group({
+      email: [
+        'jessyleone32@gmail.com',
+        [Validators.required, Validators.email],
+      ],
       password: [
-        '',
+        'password',
         [
           Validators.required,
           // Validators.minLength(8)
@@ -53,14 +58,16 @@ export class LoginFormComponent {
     });
   }
 
-  onSubmit() {
-    if (!this.loginForm.valid) return;
+  onLoginFormSubmit() {
+    if (this.loginForm.invalid) return;
+    //console.log(this.loginForm.value);
+
     const { email, password } = this.loginForm.value;
     // const email = this.loginForm.value.email;
     // const password = this.loginForm.value.password;
 
     this.#authService
-      .requestAccessToken(email, password)
+      .requestAccessToken(email!, password!)
       .pipe(first())
       .subscribe({
         next: (token) => {
@@ -68,7 +75,9 @@ export class LoginFormComponent {
           localStorage.setItem(this.accessTokenLabel, token.access_token);
           this.#state.dispatch(fetchUser());
         },
-        error: (error) => {},
+        error: (error) => {
+          this.loginError = this.#authService.handleError(error);
+        },
         complete: () => {
           this.#router.navigate([this.homePath]);
         },

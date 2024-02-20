@@ -19,7 +19,7 @@ type UserNoPass = Omit<User, 'password'>
 })
 export class UserManagementComponent implements OnInit {
 
-  //loadedUsers: UserNoPass[] = [];
+  loadedUsers: UserNoPass[] = [];
 
 
   constructor(private router: Router, private http: HttpClient) {}
@@ -28,29 +28,29 @@ export class UserManagementComponent implements OnInit {
     //this.fetchUsers()
   }
 
-  // fetchUsers() {
-  //   this.http.get<UserNoPass[]>('http://localhost:3000/user')
-  //     .subscribe(users => {
-  //       // console.log(users);
-  //       // let orderedUsers = this.orderUsers(users);
-  //       // console.log('Elementi ordinati');
-  //       // console.log(orderedUsers)
-  //       this.loadedUsers = users;
-  //     })
-  // }
+  fetchUsers() {
+    this.http.get<UserNoPass[]>('http://localhost:3000/user')
+      .subscribe(users => {
+        // console.log(users);
+        // let orderedUsers = this.orderUsers(users);
+        // console.log('Elementi ordinati');
+        // console.log(orderedUsers)
+        //this.loadedUsers = users;
+      })
+  }
   
-  // goToAddUser(): void {
-  //   this.router.navigate(['/user-registration']);
-  // } 
+  goToAddUser(): void {
+    this.router.navigate(['/user-registration']);
+  } 
 
-  // goToUpdateUser(userId: string): void {
-  //   this.router.navigate(['/user-updation'],
-  //   { queryParams: { id: userId } });
-  // }
+  goToUpdateUser(userId: string): void {
+    this.router.navigate(['/user-updation'],
+    { queryParams: { id: userId } });
+  }
 
-  // deleteUser(userId: string) {
-  //     this.http.delete('http://localhost:3000/user/' + userId)
-  //     .subscribe(() => this.fetchUsers())
-  // }
+  deleteUser(userId: string) {
+      this.http.delete('http://localhost:3000/user/' + userId)
+      .subscribe(() => this.fetchUsers())
+  }
 
 }

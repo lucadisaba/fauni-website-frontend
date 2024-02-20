@@ -1,12 +1,13 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, Subject, throwError } from 'rxjs';
-import { AuthorizedUser } from '../../models/auth-user.model';
 import { environment } from '../environments/environment.dev';
 import { AccessToken } from '../../models/auth.models';
 import { AppState } from '../store/app.state';
 import { Store } from '@ngrx/store';
 import { clearUser } from '../store/user/user.actions';
+import { RUOLI } from '../../models/ruolo.enum';
+import { ParseSourceFile } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,7 @@ export class AuthService {
   // l'idea è quella di emettere lo user loggato opp. che ha fatto logout
   // Ci dice in sintesi quando lo stato dello user è cambiato
   //authUser = new Subject<AuthorizedUser>();
-  
+
   #apiUrl = environment.apiUrl;
   #loginEndpoint = '/login';
 
@@ -26,12 +27,35 @@ export class AuthService {
     return this.#http.post<AccessToken>(
       `${this.#apiUrl}${this.#loginEndpoint}`,
       {
-        username: email,
+        email: email,
         password: password,
       }
     );
   }
 
+  // registerUser(user: Guest) {
+  //   return this.#http.post<string>(`${this.#apiUrl}`, user);
+  // }
+
+  // TODO: Refactoring con type Guest
+
+  registerUser(
+    nome: string,
+    cognome: string,
+    email: string,
+    password: string,
+    numeroTessera: number,
+    ruolo: RUOLI
+  ): Observable<string> {
+    return this.#http.post<string>(`${this.#apiUrl}`, {
+      nome: nome,
+      cognome: cognome,
+      email: email,
+      password: password,
+      numeroTessera: numeroTessera,
+      ruolo: ruolo,
+    });
+  }
 
   isAuthenticated(): boolean {
     return !!localStorage.getItem(environment.accessTokenLabel);
@@ -41,26 +65,26 @@ export class AuthService {
     localStorage.removeItem(environment.accessTokenLabel);
     this.#store.dispatch(clearUser());
   }
-  
+
   // private handleAuthentication(id: string, tokenId: string) {
   //   const authUser = new AuthorizedUser(id, tokenId);
   //   sessionStorage.setItem('tokenId', tokenId);
   //   this.authUser.next(authUser);
   // }
 
-  // private handleError(errorRes: HttpErrorResponse) {
-  //   let errorMessage = 'Si è verificato un errore sconosciuto!';
-  //   switch (errorRes.error.message) {
-  //     case 'EMAIL_NOT_FOUND':
-  //       errorMessage = 'Attenzione! Email non trovata';
-  //       break;
+  handleError(errorRes: HttpErrorResponse): string {
+    let errorMessage = 'Si è verificato un errore sconosciuto!';
+    switch (errorRes.error.message) {
+      case 'EMAIL_NOT_FOUND':
+        errorMessage = 'Attenzione! Email non trovata';
+        break;
 
-  //     case 'INVALID_PASSWORD':
-  //       errorMessage = 'Attenzione! La password non è corretta';
-  //       break;
-  //   }
-  //   return throwError(() => new Error(errorMessage))
-  // }
+      case 'INVALID_PASSWORD':
+        errorMessage = 'Attenzione! La password non è corretta';
+        break;
+    }
+    return errorMessage;
+  }
 
   // handleLogout() {
   //   sessionStorage.removeItem('tokenId');

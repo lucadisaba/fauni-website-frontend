@@ -65,28 +65,28 @@ export class UserUpdationComponent implements OnInit{
     });
   }
 
-  // fetchUserById(userId: string) {
-  //   this.http.get<UserNoPass>('http://localhost:3000/user/' + userId).pipe(first())
-  //     .subscribe(user => {
-  //       this.loadedUser = user;
-  //       this.populateForm(this.loadedUser);
-  //       console.log('il nuovo user caricato nel componente');
-  //       console.log(this.loadedUser);
-  //     })
-  // }
+  fetchUserById(userId: string) {
+    this.http.get<UserNoPass>('http://localhost:3000/user/' + userId).pipe(first())
+      .subscribe(user => {
+        this.loadedUser = user;
+        this.populateForm(this.loadedUser);
+        console.log('il nuovo user caricato nel componente');
+        console.log(this.loadedUser);
+      })
+  }
   
-  // onSubmit() {
-  //   this.http.patch('http://localhost:3000/user/' + this.userId, this.updationForm.value)
-  //   .subscribe(() => console.log('Utente con' + this.userId + 'aggiornato'));
-  // }
+  onSubmit() {
+    this.http.patch('http://localhost:3000/user/' + this.userId, this.updationForm.value)
+    .subscribe(() => console.log('Utente con' + this.userId + 'aggiornato'));
+  }
 
-  // populateForm(user: UserNoPass) {
-  //   this.updationForm.patchValue({nome: user.nome});
-  //   this.updationForm.patchValue({cognome: user.cognome});
-  //   this.updationForm.patchValue({email: user.email});
-  //   this.updationForm.patchValue({numeroTessera: user.numeroTessera});
-  //   this.updationForm.patchValue({ruolo: user.ruolo});
-  // } 
+  populateForm(user: UserNoPass) {
+    this.updationForm.patchValue({nome: user.nome});
+    this.updationForm.patchValue({cognome: user.cognome});
+    this.updationForm.patchValue({email: user.email});
+    this.updationForm.patchValue({numeroTessera: user.numeroTessera});
+    this.updationForm.patchValue({ruolo: user.ruolo});
+  } 
 
   goBack() {
     this.router.navigate(['/user-management'])

@@ -8,31 +8,31 @@ export const routes: Routes = [
   {
     path: '',
     redirectTo: '/home',
-    pathMatch: 'full',
+    pathMatch: 'full'
   },
-  { 
-    path: 'auth', 
+  {
+    path: 'auth',
     component: AuthPageComponent,
     //loadComponent: () => import('./pages/auth-page/auth-page.component'),
-    canActivate: []
-},
-{ 
-    path: 'home', 
+    canActivate: [],
+  },
+  {
+    path: 'home',
     data: { title: 'Home', showInNavbar: true },
     component: HomePageComponent,
     //loadComponent: () => import('./pages/home-page/home-page.component'),
-    canActivate: []
+    canActivate: [],
   },
   {
-    path: 'user-management', 
-    component: UserManagementComponent
+    path: 'user-management',
+    component: UserManagementComponent,
   },
-  { 
-    path: 'user-updation', 
-    component: UserUpdationComponent 
+  {
+    path: 'user-updation',
+    component: UserUpdationComponent,
   },
-  { 
-    path: '**', 
-    redirectTo: 'home' 
+  {
+    path: '**',
+    redirectTo: 'home',
   },
 ];

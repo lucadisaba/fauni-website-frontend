@@ -1,42 +1,32 @@
-<div class="alert alert-danger" *ngIf="error">
-  <p>{{ error }}</p>
+<div class="alert alert-danger" *ngIf="loginError">
+  <p>{{ loginError }}</p>
 </div>
-<form class="px-2" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="FormControlInputEmail"> Indirizzo email</label>
-      <input 
-        type="email" 
-        class="form-control" 
-        id="FormControlInputEmail" 
-        placeholder="nome@example.com"
-        formControlName="email">
-    </div>
-    <span class="help-block" *ngIf="!loginForm.get('email')?.valid  && loginForm.get('email')?.touched">
-      Per favore inserisci una email valida!</span>
-    <div class="form-group">
-      <label for="FormControlInputPassword">
-        Password <a style="color: blue;">Dimenticato la password?</a></label>
-      <input 
-        type="password" 
-        class="form-control" 
-        id="FormControlInputPassword" 
-        formControlName="password"
-        minlength="8">
-    </div>
-    <span class="help-block" *ngIf="!loginForm.get('password')?.valid && loginForm.get('password')?.touched">
-      Per favore inserisci una password!</span>
-    <br>
-    <button 
-      class="btn btn-success"
-      type="submit"
-      [disabled]="!loginForm.valid">
-      Sign in
-    </button> 
-    <br><br>
-  </form>
-  
-  
-  <!-- TEMPLATE-DRIVEN FORM CONSTRUCTION 
+<form class="px-2" [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmit()">
+  <div class="form-group">
+    <label for="LoginFormControlInputEmail"> Indirizzo email</label>
+    <input class="form-control" id="LoginFormControlInputEmail" placeholder="nome@example.com"
+      formControlName="email" />
+  </div>
+  <!-- Checking tramite stringa ad oggetti da get da evitare  -->
+  <span class="help-block" *ngIf="loginForm.controls.email.invalid && loginForm.controls.email.touched">
+    Per favore inserisci una email valida!</span>
+  <div class="form-group">
+    <label for="LoginFormControlInputPassword">
+      Password <a style="color: blue">Dimenticato la password?</a></label>
+    <input class="form-control" id="LoginFormControlInputPassword" formControlName="password" />
+  </div>
+  <span class="help-block" *ngIf="
+      loginForm.controls.password.invalid && loginForm.controls.password.touched
+    ">
+    Per favore inserisci una password!</span>
+  <br />
+  <button class="btn btn-success" type="submit" [disabled]="loginForm.invalid">
+    Sign in
+  </button>
+  <br /><br />
+</form>
+
+<!-- TEMPLATE-DRIVEN FORM CONSTRUCTION 
     <form class="px-2" (ngSubmit)="onSubmit(form)" #form="ngForm">
     <div class="form-group">
       <label for="FormControlInputEmail"> Indirizzo email</label>
