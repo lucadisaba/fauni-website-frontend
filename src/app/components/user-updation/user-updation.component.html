@@ -1,4 +1,4 @@
-<form class="px-2" [formGroup]="updationForm" (ngSubmit)="onSubmit()">
+<form class="px-2" [formGroup]="updationForm">
     <div class="form-group">
         <label for="FormControlInputNome"> Nome</label>
         <input 
@@ -9,7 +9,7 @@
           formControlName="nome"
           style="text-transform: capitalize;">
     </div>
-    <span class="help-block" *ngIf="!updationForm.get('nome')?.valid  && updationForm.get('nome')?.touched">
+    <span class="help-block" *ngIf="updationForm.controls.nome.invalid  && updationForm.controls.nome.touched">
       Inserire un nome valido!</span>
     <div class="form-group">
         <label for="FormControlInputCognome"> Cognome</label>
@@ -21,7 +21,7 @@
           formControlName="cognome"
           style="text-transform: capitalize;">
     </div>
-    <span class="help-block" *ngIf="!updationForm.get('cognome')?.valid  && updationForm.get('cognome')?.touched">
+    <span class="help-block" *ngIf="updationForm.controls.cognome.invalid  && updationForm.controls.cognome.touched">
       Inserire un cognome valido</span>
     <div class="form-group">
         <label for="FormControlInputEmail"> Indirizzo email</label>
@@ -32,7 +32,7 @@
           placeholder="nome@example.com"
           formControlName="email">
     </div>
-    <span class="help-block" *ngIf="!updationForm.get('email')?.valid  && updationForm.get('email')?.touched">
+    <span class="help-block" *ngIf="updationForm.controls.email.invalid  && updationForm.controls.email.touched">
         Per favore inserisci una email valida!</span>
     <div class="form-group">
         <label for="FormControlInputNrTessera"> Numero tessera </label>
@@ -56,13 +56,14 @@
             <option value="TESSERATO">TESSERATO</option>
           </select>
     </div>
-    <span class="help-block" *ngIf="!updationForm.get('ruolo')?.valid && updationForm.get('ruolo')?.touched">
+    <span class="help-block" *ngIf="updationForm.controls.ruolo.invalid  && updationForm.controls.ruolo.touched">
         Perfavore definisci un ruolo per questo fauno!</span>    
     <br>  
     <button 
       class="btn btn-success"
       type="submit"
-      [disabled]="!updationForm.valid">
+      (click)="updateUser()"
+      [disabled]="updationForm.invalid">
       Aggiorna utente
     </button>
     <button 

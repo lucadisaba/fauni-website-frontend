@@ -1,96 +1,96 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { first } from 'rxjs';
+import { Component, OnInit, inject } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { User } from '../../../models/user.model';
-
-type UserNoPass = Omit<User, 'password'>
+import { AuthService } from '../../services/auth.service';
+import { RUOLI } from '../../../models/ruolo.enum';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'update-user',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    CommonModule
-  ],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './user-updation.component.html',
-  styleUrl: './user-updation.component.css'
+  styleUrl: './user-updation.component.css',
 })
-export class UserUpdationComponent implements OnInit{
+export class UserUpdationComponent implements OnInit {
+  #fb = inject(FormBuilder);
+  #authService = inject(AuthService);
+  #router = inject(Router);
+  #activatedRoute = inject(ActivatedRoute);
 
-  loadedUser!: UserNoPass;
+  loadedUser!: User;
   userId: string = '';
-  updationForm!: FormGroup;
-  namePattern = '[A-Za-z]{1}[a-z]+';
-  surnamePattern = '([A-Za-z]{1}([\'][A-Z])?[a-z]+[ ]?)+';
-  numericPattern = '[0-9]*';
+  updationForm!: FormGroup<{
+    nome: FormControl<string>;
+    cognome: FormControl<string>;
+    email: FormControl<string>;
+    numeroTessera: FormControl<number>;
+    ruolo: FormControl<RUOLI>;
+  }>;
 
-  constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, private router: Router) {  }
+  #namePattern = '[A-Za-z]{1}[a-z]+';
+  #surnamePattern = "([A-Za-z]{1}(['][A-Z])?[a-z]+[ ]?)+";
+  #numericPattern = '[0-9]*';
+
+  constructor() {
+    this.inizializeForm();
+  }
 
   ngOnInit(): void {
+    this.fetchUserById(this.#activatedRoute.snapshot.queryParams['id']);
+  }
 
-    // Popolamento dei dati
-    // this.activatedRoute.queryParams.pipe(first())
-    //   .subscribe(params => {
-    //     console.log('id letto dai params' + ' ' + params['id']); 
-    //     this.userId = params['id'];
-    //   }
-    // );
-
-    //this.fetchUserById(this.userId);
-
-    //Reactive form
-    this.updationForm = new FormGroup({
-      'nome': new FormControl(null, [
-        Validators.pattern(this.namePattern),
-        Validators.required
-      ]),
-      'cognome': new FormControl(null, [ 
-        Validators.pattern(this.surnamePattern),
-        Validators.required
-      ]),
-      'email': new FormControl(null, [
-        Validators.email,
-        Validators.required
-      ]),
-      'numeroTessera': new FormControl(null, [
-        Validators.pattern(this.numericPattern),
-        Validators.required
-      ]),
-      'ruolo': new FormControl(null, [
-        Validators.required
-      ]),
+  private inizializeForm(): void {
+    this.updationForm = this.#fb.nonNullable.group({
+      nome: ['', [Validators.required, Validators.pattern(this.#namePattern)]],
+      cognome: [
+        '',
+        [Validators.required, Validators.pattern(this.#surnamePattern)],
+      ],
+      email: ['', [Validators.required, Validators.email]],
+      numeroTessera: [
+        0,
+        [Validators.required, Validators.pattern(this.#numericPattern)],
+      ],
+      ruolo: [RUOLI.None, Validators.required],
     });
   }
 
-  fetchUserById(userId: string) {
-    this.http.get<UserNoPass>('http://localhost:3000/user/' + userId).pipe(first())
-      .subscribe(user => {
-        this.loadedUser = user;
-        this.populateForm(this.loadedUser);
-        console.log('il nuovo user caricato nel componente');
-        console.log(this.loadedUser);
-      })
-  }
-  
-  onSubmit() {
-    this.http.patch('http://localhost:3000/user/' + this.userId, this.updationForm.value)
-    .subscribe(() => console.log('Utente con' + this.userId + 'aggiornato'));
+  private fetchUserById(userId: string) {
+    this.#authService.fetchUserById(userId).subscribe((user: User) => {
+      this.loadedUser = user;
+      this.populateForm(this.loadedUser);
+    });
   }
 
-  populateForm(user: UserNoPass) {
-    this.updationForm.patchValue({nome: user.nome});
-    this.updationForm.patchValue({cognome: user.cognome});
-    this.updationForm.patchValue({email: user.email});
-    this.updationForm.patchValue({numeroTessera: user.numeroTessera});
-    this.updationForm.patchValue({ruolo: user.ruolo});
-  } 
+  updateUser() {
+    this.#authService
+      .updateUser(
+        this.#activatedRoute.snapshot.queryParams['id'],
+        this.updationForm.value
+      )
+      .subscribe(() => {
+        console.log('Utente aggiornato');
+        this.#router.navigate(['/user-management']);
+      });
+  }
+
+  private populateForm(user: User) {
+    this.updationForm.patchValue({ nome: user.nome });
+    this.updationForm.patchValue({ cognome: user.cognome });
+    this.updationForm.patchValue({ email: user.email });
+    this.updationForm.patchValue({ numeroTessera: user.numeroTessera });
+    this.updationForm.patchValue({ ruolo: user.ruolo });
+  }
 
   goBack() {
-    this.router.navigate(['/user-management'])
+    this.#router.navigate(['/user-management']);
   }
-
-
 }

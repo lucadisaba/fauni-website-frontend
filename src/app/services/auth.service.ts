@@ -7,7 +7,8 @@ import { AppState } from '../store/app.state';
 import { Store } from '@ngrx/store';
 import { clearUser } from '../store/user/user.actions';
 import { RUOLI } from '../../models/ruolo.enum';
-import { ParseSourceFile } from '@angular/compiler';
+import { User } from '../../models/user.model';
+import { FormArray, FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -47,14 +48,34 @@ export class AuthService {
     numeroTessera: number,
     ruolo: RUOLI
   ): Observable<string> {
-    return this.#http.post<string>(`${this.#apiUrl}`, {
-      nome: nome,
-      cognome: cognome,
-      email: email,
-      password: password,
-      numeroTessera: numeroTessera,
-      ruolo: ruolo,
-    });
+    return this.#http.post(
+      this.#apiUrl,
+      {
+        nome,
+        cognome,
+        email,
+        password,
+        numeroTessera,
+        ruolo,
+      },
+      { responseType: 'text' }
+    );
+  }
+
+  fetchUsers(): Observable<User[]> {
+    return this.#http.get<User[]>(this.#apiUrl);
+  }
+
+  fetchUserById(userId: string): Observable<User> {
+    return this.#http.get<User>(this.#apiUrl + '/' + userId);
+  }
+
+  deleteUser(userId: string): Observable<any> {
+    return this.#http.delete(this.#apiUrl + '/' + userId);
+  }
+
+  updateUser(userId: string, formUpdationValues: FormGroup['value']): Observable<any> {
+    return this.#http.patch(this.#apiUrl + '/' + userId, formUpdationValues);
   }
 
   isAuthenticated(): boolean {

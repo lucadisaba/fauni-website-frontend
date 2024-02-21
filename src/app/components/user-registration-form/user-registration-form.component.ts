@@ -26,7 +26,6 @@ export class UserRegistrationFormComponent {
   #fb = inject(FormBuilder);
   #authService = inject(AuthService);
   #router = inject(Router);
-  #state = inject(Store<AppState>);
 
   registrationForm!: FormGroup<{
     nome: FormControl<string>;
@@ -78,8 +77,8 @@ export class UserRegistrationFormComponent {
       .registerUser(nome!, cognome!, email!, password!, numeroTessera!, ruolo!)
       .pipe(first())
       .subscribe({
-        next: (value: string) => {
-          console.log(value);
+        next: (response_value: string) => {
+          console.log(response_value);
         },
         error: (error) => {
           this.#authService.handleError(error);
