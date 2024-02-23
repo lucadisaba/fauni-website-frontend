@@ -1,1 +1,6 @@
-<p>{{ title }}</p>
+<main-container>
+    @if (user$ | async; as user) {
+    <welcome-header [name]="user.name" />
+    }
+    <button (click)="logout()">Logout</button>
+</main-container>

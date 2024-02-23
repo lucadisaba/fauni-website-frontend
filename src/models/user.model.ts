@@ -1,12 +1,12 @@
-import { RUOLI } from "./ruolo.enum";
+import { ROLES } from "./ruolo.enum";
 
 export interface User {
     id: string;
-    nome: string;
-    cognome: string;
+    name: string;
+    surname: string;
     email: string;
-    numeroTessera: number;
-    ruolo: RUOLI;
+    cardNumber: number;
+    role: ROLES;
 }
 
 export interface UserError {

@@ -8,25 +8,32 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { Observable, first } from 'rxjs';
+import { first } from 'rxjs';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
 import { environment } from '../../environments/environment.dev';
-import { fetchUser } from '../../store/user/user.actions';
+import { addUser } from '../../store/user/user.actions';
+import { GoogleSigninButtonModule, SocialAuthService } from '@abacritt/angularx-social-login';
 
 // type UserNoPass = Omit<User, 'password'>;
 
 @Component({
   selector: 'login-form',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    CommonModule,
+    GoogleSigninButtonModule,
+  ],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.css',
 })
-export class LoginFormComponent {
+export class LoginFormComponent implements OnInit{
   #fb = inject(FormBuilder);
   #authService = inject(AuthService);
+  #googleAuthService = inject(SocialAuthService);
   #router = inject(Router);
   #state = inject(Store<AppState>);
 
@@ -40,6 +47,13 @@ export class LoginFormComponent {
 
   constructor() {
     this.initializeForm();
+  }
+
+  ngOnInit(): void {
+    this.#googleAuthService.authState.subscribe((googleUser) => {
+      console.log(googleUser)
+      //perform further logics
+    });
   }
 
   private initializeForm(): void {
@@ -61,19 +75,17 @@ export class LoginFormComponent {
   onLoginFormSubmit() {
     if (this.loginForm.invalid) return;
     //console.log(this.loginForm.value);
-
     const { email, password } = this.loginForm.value;
     // const email = this.loginForm.value.email;
     // const password = this.loginForm.value.password;
-
     this.#authService
-      .requestAccessToken(email!, password!)
+      .requestAccess(email!, password!)
       .pipe(first())
       .subscribe({
-        next: (token) => {
+        next: (response) => {
           // Setting del token nel local storage che ha identificativo definito nell'environment
-          localStorage.setItem(this.accessTokenLabel, token.access_token);
-          this.#state.dispatch(fetchUser());
+          localStorage.setItem(this.accessTokenLabel, response.access_token);
+          this.#state.dispatch(addUser({ user: response.userResponse }));
         },
         error: (error) => {
           this.loginError = this.#authService.handleError(error);

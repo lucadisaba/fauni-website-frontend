@@ -2,13 +2,13 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, Subject, throwError } from 'rxjs';
 import { environment } from '../environments/environment.dev';
-import { AccessToken } from '../../models/auth.models';
+import { AccessResponse } from '../../models/access-response.models';
 import { AppState } from '../store/app.state';
 import { Store } from '@ngrx/store';
 import { clearUser } from '../store/user/user.actions';
-import { RUOLI } from '../../models/ruolo.enum';
+import { ROLES } from '../../models/ruolo.enum';
 import { User } from '../../models/user.model';
-import { FormArray, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -24,8 +24,8 @@ export class AuthService {
   #apiUrl = environment.apiUrl;
   #loginEndpoint = '/login';
 
-  requestAccessToken(email: string, password: string): Observable<AccessToken> {
-    return this.#http.post<AccessToken>(
+  requestAccess(email: string, password: string): Observable<AccessResponse> {
+    return this.#http.post<AccessResponse>(
       `${this.#apiUrl}${this.#loginEndpoint}`,
       {
         email: email,
@@ -41,22 +41,22 @@ export class AuthService {
   // TODO: Refactoring con type Guest
 
   registerUser(
-    nome: string,
-    cognome: string,
+    name: string,
+    surname: string,
     email: string,
     password: string,
-    numeroTessera: number,
-    ruolo: RUOLI
+    cardNumber: number,
+    role: ROLES
   ): Observable<string> {
     return this.#http.post(
       this.#apiUrl,
       {
-        nome,
-        cognome,
+        name,
+        surname,
         email,
         password,
-        numeroTessera,
-        ruolo,
+        cardNumber,
+        role,
       },
       { responseType: 'text' }
     );

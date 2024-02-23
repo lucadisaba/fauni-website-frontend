@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { User } from '../../../models/user.model';
 import { AuthService } from '../../services/auth.service';
-import { RUOLI } from '../../../models/ruolo.enum';
+import { ROLES } from '../../../models/ruolo.enum';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -28,11 +28,11 @@ export class UserUpdationComponent implements OnInit {
   loadedUser!: User;
   userId: string = '';
   updationForm!: FormGroup<{
-    nome: FormControl<string>;
-    cognome: FormControl<string>;
+    name: FormControl<string>;
+    surname: FormControl<string>;
     email: FormControl<string>;
-    numeroTessera: FormControl<number>;
-    ruolo: FormControl<RUOLI>;
+    cardNumber: FormControl<number>;
+    role: FormControl<ROLES>;
   }>;
 
   #namePattern = '[A-Za-z]{1}[a-z]+';
@@ -49,17 +49,17 @@ export class UserUpdationComponent implements OnInit {
 
   private inizializeForm(): void {
     this.updationForm = this.#fb.nonNullable.group({
-      nome: ['', [Validators.required, Validators.pattern(this.#namePattern)]],
-      cognome: [
+      name: ['', [Validators.required, Validators.pattern(this.#namePattern)]],
+      surname: [
         '',
         [Validators.required, Validators.pattern(this.#surnamePattern)],
       ],
       email: ['', [Validators.required, Validators.email]],
-      numeroTessera: [
+      cardNumber: [
         0,
         [Validators.required, Validators.pattern(this.#numericPattern)],
       ],
-      ruolo: [RUOLI.None, Validators.required],
+      role: [ROLES.None, Validators.required],
     });
   }
 
@@ -83,11 +83,11 @@ export class UserUpdationComponent implements OnInit {
   }
 
   private populateForm(user: User) {
-    this.updationForm.patchValue({ nome: user.nome });
-    this.updationForm.patchValue({ cognome: user.cognome });
+    this.updationForm.patchValue({ name: user.name });
+    this.updationForm.patchValue({ surname: user.surname });
     this.updationForm.patchValue({ email: user.email });
-    this.updationForm.patchValue({ numeroTessera: user.numeroTessera });
-    this.updationForm.patchValue({ ruolo: user.ruolo });
+    this.updationForm.patchValue({ cardNumber: user.cardNumber });
+    this.updationForm.patchValue({ role: user.role });
   }
 
   goBack() {

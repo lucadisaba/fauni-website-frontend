@@ -3,7 +3,7 @@ import { HeaderBarComponent } from '../../dumb-components/header-bar/header-bar.
 import { FooterBarComponent } from '../../dumb-components/footer-bar/footer-bar.component';
 
 @Component({
-  selector: 'app-main-container',
+  selector: 'main-container',
   standalone: true,
   imports: [HeaderBarComponent, FooterBarComponent],
   template: `

@@ -1,9 +1,7 @@
-import { NONE_TYPE } from "@angular/compiler";
-
-export const enum RUOLI {
+export const enum ROLES {
   None,
-  AMMINISTRATORE = 'AMMINISTRATORE',
-  PRESIDENTE = 'PRESIDENTE',
-  MEMBRO = 'MEMBRO',
-  TESSERATO = 'TESSERATO',
+  ADMIN = 'ADMIN',
+  PRESIDENT = 'PRESIDENT',
+  MEMBER = 'MEMBER',
+  ASSOCIATE = 'ASSOCIATE',
 }

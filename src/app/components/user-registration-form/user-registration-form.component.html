@@ -1,22 +1,22 @@
 <form class="px-2" [formGroup]="registrationForm" (ngSubmit)="onRegistrationFormSubmit()">
   <div class="form-group">
-    <label for="RegistrationFormControlInputNome"> Nome</label>
-    <input type="text" class="form-control" id="RegistrationFormControlInputNome" placeholder="Nome"
-      formControlName="nome" style="text-transform: capitalize" />
+    <label for="RegistrationFormControlInputName"> Nome</label>
+    <input type="text" class="form-control" id="RegistrationFormControlInputName" placeholder="Nome"
+      formControlName="name" style="text-transform: capitalize" />
   </div>
   <span class="help-block" *ngIf="
-      registrationForm.controls.nome.invalid &&
-      registrationForm.controls.nome.touched
+      registrationForm.controls.name.invalid &&
+      registrationForm.controls.name.touched
     ">
     Inserire un nome valido!</span>
   <div class="form-group">
-    <label for="RegistrationFormControlInputCognome"> Cognome</label>
-    <input type="text" class="form-control" id="RegistrationFormControlInputCognome" placeholder="Cognome"
-      formControlName="cognome" style="text-transform: capitalize" />
+    <label for="RegistrationFormControlInputSurname"> Cognome</label>
+    <input type="text" class="form-control" id="RegistrationFormControlInputSurname" placeholder="Cognome"
+      formControlName="surname" style="text-transform: capitalize" />
   </div>
   <span class="help-block" *ngIf="
-      registrationForm.controls.cognome.invalid &&
-      registrationForm.controls.cognome.touched
+      registrationForm.controls.surname.invalid &&
+      registrationForm.controls.surname.touched
     ">
     Inserire un cognome valido!</span>
   <div class="form-group">
@@ -39,25 +39,25 @@
     ">
     Per favore inserisci una password!</span>
   <div class="form-group">
-    <label for="RegistrationFormControlInputNrTessera"> Numero tessera </label>
-    <input type="number" class="form-control" id="RegistrationFormControlInputNrTessera" placeholder="-"
-      formControlName="numeroTessera" />
+    <label for="RegistrationFormControlInputCardNumber"> Numero tessera </label>
+    <input type="number" class="form-control" id="RegistrationFormControlInputCardNumber" placeholder="-"
+      formControlName="cardNumber" />
   </div>
   <div class="form-group">
-    <label for="RegistrationFormControlInputRuolo"> Ruolo </label>
-    <select class="form-select" id="RegistrationFormControlInputRuolo" formControlName="ruolo">
+    <label for="RegistrationFormControlInputRole"> Ruolo </label>
+    <select class="form-select" id="RegistrationFormControlInputRole" formControlName="role">
       <option value="null" disabled selected hidden>
         Scegli ruolo all'interno dell'associazione
       </option>
-      <option value="AMMINISTRATORE">AMMINISTRATORE</option>
-      <option value="PRESIDENTE">PRESIDENTE</option>
-      <option value="MEMBRO">MEMBRO</option>
-      <option value="TESSERATO">TESSERATO</option>
+      <option value="ADMIN">AMMINISTRATORE</option>
+      <option value="PRESIDENT">PRESIDENTE</option>
+      <option value="MEMBER">MEMBRO</option>
+      <option value="ASSOCIATE">TESSERATO</option>
     </select>
   </div>
   <span class="help-block" *ngIf="
-      registrationForm.controls.ruolo.invalid &&
-      registrationForm.controls.ruolo.touched
+      registrationForm.controls.role.invalid &&
+      registrationForm.controls.role.touched
     ">
     Perfavore definisci un ruolo per questo fauno!</span>
   <br />

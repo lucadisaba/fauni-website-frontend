@@ -29,11 +29,11 @@ Search elements
         <tr *ngFor="let user of loadedUsers; let i = index">
             <!--<td *ngFor="let field of user | keyvalue">{{field.key}}</td>-->
             <td>{{ i + 1 }}</td>
-            <td>{{user.nome}}</td>
-            <td>{{user.cognome}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.surname}}</td>
             <td>{{user.email}}</td>
-            <td>{{user.numeroTessera}}</td>
-            <td>{{user.ruolo}}</td>
+            <td>{{user.cardNumber}}</td>
+            <td>{{user.role}}</td>
             <td>
                 <a (click)="goToUpdateUser(user.id)" class="btn btn-info btn-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">

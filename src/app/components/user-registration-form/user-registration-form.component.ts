@@ -7,13 +7,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { AppState } from '../../store/app.state';
-import { Store } from '@ngrx/store';
-import { RUOLI } from '../../../models/ruolo.enum';
-import { Guest } from '../../../models/guest.type';
+import { ROLES } from '../../../models/ruolo.enum';
 import { first } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'user-registration-form',
@@ -28,12 +25,12 @@ export class UserRegistrationFormComponent {
   #router = inject(Router);
 
   registrationForm!: FormGroup<{
-    nome: FormControl<string>;
-    cognome: FormControl<string>;
+    name: FormControl<string>;
+    surname: FormControl<string>;
     email: FormControl<string>;
     password: FormControl<string>;
-    numeroTessera: FormControl<number>;
-    ruolo: FormControl<RUOLI>;
+    cardNumber: FormControl<number>;
+    role: FormControl<ROLES>;
   }>;
 
   #namePattern = '[A-Za-z]{1}[a-z]+';
@@ -46,8 +43,8 @@ export class UserRegistrationFormComponent {
 
   private initializeForm(): void {
     this.registrationForm = this.#fb.nonNullable.group({
-      nome: ['', [Validators.required, Validators.pattern(this.#namePattern)]],
-      cognome: [
+      name: ['', [Validators.required, Validators.pattern(this.#namePattern)]],
+      surname: [
         '',
         [Validators.required, Validators.pattern(this.#surnamePattern)],
       ],
@@ -59,22 +56,22 @@ export class UserRegistrationFormComponent {
           // Validators.minLength(8)
         ],
       ],
-      numeroTessera: [
+      cardNumber: [
         0,
         [Validators.required, Validators.pattern(this.#numericPattern)],
       ],
-      ruolo: [RUOLI.None, Validators.required],
+      role: [ROLES.None, Validators.required],
     });
   }
 
   onRegistrationFormSubmit() {
     if (this.registrationForm.invalid) return;
 
-    const { nome, cognome, email, password, numeroTessera, ruolo } =
+    const { name, surname, email, password, cardNumber, role } =
       this.registrationForm.value;
 
     this.#authService
-      .registerUser(nome!, cognome!, email!, password!, numeroTessera!, ruolo!)
+      .registerUser(name!, surname!, email!, password!, cardNumber!, role!)
       .pipe(first())
       .subscribe({
         next: (response_value: string) => {
