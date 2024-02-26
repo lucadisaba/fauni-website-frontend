@@ -6,7 +6,7 @@ import { AccessResponse } from '../../models/access-response.models';
 import { AppState } from '../store/app.state';
 import { Store } from '@ngrx/store';
 import { clearUser } from '../store/user/user.actions';
-import { ROLES } from '../../models/ruolo.enum';
+import { ROLES } from '../../models/role.enum';
 import { User } from '../../models/user.model';
 import { FormGroup } from '@angular/forms';
 

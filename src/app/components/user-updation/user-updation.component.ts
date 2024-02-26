@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { User } from '../../../models/user.model';
 import { AuthService } from '../../services/auth.service';
-import { ROLES } from '../../../models/ruolo.enum';
+import { ROLES } from '../../../models/role.enum';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({

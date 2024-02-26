@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { ROLES } from '../../../models/ruolo.enum';
+import { ROLES } from '../../../models/role.enum';
 import { first } from 'rxjs';
 import { Router } from '@angular/router';
 
