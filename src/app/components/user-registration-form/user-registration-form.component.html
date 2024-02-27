@@ -1,34 +1,34 @@
 <form class="px-2" [formGroup]="registrationForm" (ngSubmit)="onRegistrationFormSubmit()">
   <div class="form-group">
-    <label for="RegistrationFormControlInputName"> Nome</label>
-    <input type="text" class="form-control" id="RegistrationFormControlInputName" placeholder="Nome"
+    <label for="RegistrationFormControlInputName"> {{ 'form.Name' | translate }}</label>
+    <input type="text" class="form-control" id="RegistrationFormControlInputName" placeholder="{{'form.Name' | translate}}"
       formControlName="name" style="text-transform: capitalize" />
   </div>
   <span class="help-block" *ngIf="
       registrationForm.controls.name.invalid &&
       registrationForm.controls.name.touched
     ">
-    Inserire un nome valido!</span>
+    {{'form.InvalidName' | translate }}</span>
   <div class="form-group">
-    <label for="RegistrationFormControlInputSurname"> Cognome</label>
-    <input type="text" class="form-control" id="RegistrationFormControlInputSurname" placeholder="Cognome"
+    <label for="RegistrationFormControlInputSurname"> {{ 'form.Surname' | translate }}</label>
+    <input type="text" class="form-control" id="RegistrationFormControlInputSurname" placeholder="{{'form.Surname' | translate}}"
       formControlName="surname" style="text-transform: capitalize" />
   </div>
   <span class="help-block" *ngIf="
       registrationForm.controls.surname.invalid &&
       registrationForm.controls.surname.touched
     ">
-    Inserire un cognome valido!</span>
+    {{'form.InvalidSurname' | translate}}</span>
   <div class="form-group">
-    <label for="RegistrationFormControlInputEmail"> Indirizzo email</label>
-    <input type="email" class="form-control" id="RegistrationFormControlInputEmail" placeholder="nome@example.com"
+    <label for="RegistrationFormControlInputEmail"> {{'form.EmailAddress' | translate}}</label>
+    <input type="email" class="form-control" id="RegistrationFormControlInputEmail" placeholder="{{'form.EmailAddressPlaceholder' | translate}}"
       formControlName="email" />
   </div>
   <span class="help-block" *ngIf="
       registrationForm.controls.email.invalid &&
       registrationForm.controls.email.touched
     ">
-    Per favore inserisci una email valida!</span>
+    {{'form.InvalidEmail' | translate}}</span>
   <div class="form-group">
     <label for="RegistrationFormControlInputPassword"> Password</label>
     <input type="password" class="form-control" id="RegistrationFormControlInputPassword" formControlName="password" />
@@ -37,35 +37,40 @@
       registrationForm.controls.password.invalid &&
       registrationForm.controls.password.touched
     ">
-    Per favore inserisci una password!</span>
+    {{'form.InvalidPassword' | translate}}</span>
   <div class="form-group">
-    <label for="RegistrationFormControlInputCardNumber"> Numero tessera </label>
+    <label for="RegistrationFormControlInputCardNumber"> {{'form.CardNumber' | translate}} </label>
     <input type="number" class="form-control" id="RegistrationFormControlInputCardNumber" placeholder="-"
       formControlName="cardNumber" />
   </div>
+  <span class="help-block" *ngIf="
+      registrationForm.controls.cardNumber.invalid &&
+      registrationForm.controls.cardNumber.touched
+    ">
+    {{'form.InvalidCardNumber' | translate}}</span>
   <div class="form-group">
-    <label for="RegistrationFormControlInputRole"> Ruolo </label>
+    <label for="RegistrationFormControlInputRole"> {{'form.Role' | translate}} </label>
     <select class="form-select" id="RegistrationFormControlInputRole" formControlName="role">
       <option value="null" disabled selected hidden>
         Scegli ruolo all'interno dell'associazione
       </option>
-      <option value="ADMIN">AMMINISTRATORE</option>
-      <option value="PRESIDENT">PRESIDENTE</option>
-      <option value="MEMBER">MEMBRO</option>
-      <option value="ASSOCIATE">TESSERATO</option>
+      <option value="ADMIN">{{'form.Roles.ADMIN' | translate}}</option>
+      <option value="PRESIDENT">{{'form.Roles.PRESIDENT' | translate}}</option>
+      <option value="MEMBER">{{'form.Roles.MEMBER' | translate}}</option>
+      <option value="ASSOCIATE">{{'form.Roles.ASSOCIATE' | translate}}</option>
     </select>
   </div>
   <span class="help-block" *ngIf="
       registrationForm.controls.role.invalid &&
       registrationForm.controls.role.touched
     ">
-    Perfavore definisci un ruolo per questo fauno!</span>
+    {{"form.InvalidRole" | translate}}</span>
   <br />
   <button class="btn btn-success" type="submit" [disabled]="registrationForm.invalid">
-    Inserisci utente
+    {{'form.Buttons.AddUser' | translate}}
   </button>
   <button class="btn btn-danger" type="submit" (click)="goBack()">
-    Torna indietro
+    {{'form.Buttons.GoBack' | translate}}
   </button>
   <br /><br />
 </form>

@@ -1,0 +1,40 @@
+{
+    "form": {
+        "Name": "Nome",
+        "InvalidName": "Mitt nu nome bun!",
+        "Surname": "Cugnom",
+        "InvalidSurname": "Mitt nu cognom bun!",
+        "EmailAddress": "Indirizzo email",
+        "EmailAddressPlaceholder": "nome.cognome@gmail.com",
+        "InvalidEmail": "Eddai mitt n' email bun!",
+        "Password": "Password",
+        "InvalidPassword": "Eddai mitt na password!",
+        "CardNumber": "Numr tessera",
+        "InvalidCardNumber": "Eddai mitt nu numer tessera bun!",
+        "Role": "Ruolo",
+        "RolePlaceholder": "Mitt che fi dentr l'associazione",
+        "Roles": {
+            "ADMIN": "AMMINISTRATORE",
+            "PRESIDENT": "PRESIDENTE",
+            "MEMBER": "MEMBRO",
+            "ASSOCIATE": "TESSERATO"
+        },
+        "InvalidRole": "Mitt nu ruolo bun!",
+        "LoginErrorLabel": {
+            "UnknownError": "Errore co na frec de nnumr! Che ne sacc che è!",
+            "EmailNotFound": "Armitt la mail",
+            "IncorrectPassword": "I sbajat password!"
+        },
+        "Buttons": {
+            "AddUser": "Aggiungi fauno",
+            "GoBack": "Arvattn",
+            "SignIn": "Intr"
+        },
+        "Languages": {
+            "Italian": "L'Itaglian",
+            "English": "L'Ingles",
+            "Spanish": "Lu Spagnol",
+            "Fanese": "Lu Fanes"
+        }
+    }
+}

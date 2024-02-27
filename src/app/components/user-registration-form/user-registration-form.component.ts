@@ -11,11 +11,12 @@ import { AuthService } from '../../services/auth.service';
 import { ROLES } from '../../../models/role.enum';
 import { first } from 'rxjs';
 import { Router } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'user-registration-form',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, TranslateModule],
   templateUrl: './user-registration-form.component.html',
   styleUrl: './user-registration-form.component.css',
 })
@@ -23,6 +24,8 @@ export class UserRegistrationFormComponent {
   #fb = inject(FormBuilder);
   #authService = inject(AuthService);
   #router = inject(Router);
+  #translateService = inject(TranslateService);
+
 
   registrationForm!: FormGroup<{
     name: FormControl<string>;
@@ -48,9 +51,9 @@ export class UserRegistrationFormComponent {
         '',
         [Validators.required, Validators.pattern(this.#surnamePattern)],
       ],
-      email: ['eleonora@gmail.com', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
       password: [
-        'password',
+        '',
         [
           Validators.required,
           // Validators.minLength(8)

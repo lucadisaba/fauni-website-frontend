@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { first } from 'rxjs';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -26,6 +27,7 @@ import { GoogleSigninButtonModule, SocialAuthService } from '@abacritt/angularx-
     CommonModule,
     CommonModule,
     GoogleSigninButtonModule,
+    TranslateModule
   ],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.css',
@@ -36,7 +38,8 @@ export class LoginFormComponent implements OnInit{
   #googleAuthService = inject(SocialAuthService);
   #router = inject(Router);
   #state = inject(Store<AppState>);
-
+  #translateService = inject(TranslateService);
+  
   accessTokenLabel = environment.accessTokenLabel;
   homePath = '/home';
   loginError = '';
@@ -44,6 +47,7 @@ export class LoginFormComponent implements OnInit{
     email: FormControl<string>;
     password: FormControl<string>;
   }>;
+  
 
   constructor() {
     this.initializeForm();
@@ -59,11 +63,11 @@ export class LoginFormComponent implements OnInit{
   private initializeForm(): void {
     this.loginForm = this.#fb.nonNullable.group({
       email: [
-        'jessyleone32@gmail.com',
+        '',
         [Validators.required, Validators.email],
       ],
       password: [
-        'password',
+        '',
         [
           Validators.required,
           // Validators.minLength(8)

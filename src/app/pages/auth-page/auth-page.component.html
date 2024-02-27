@@ -1,3 +1,15 @@
 <login-form />
 <!--  -->
+<div class="language">
+  <input type="radio" id="italian" name="fav_language" value="it" checked="checked" (change)="onChange($event)">
+  <label for="italian">{{'form.Languages.Italian' | translate}}</label><br>
+  <input type="radio" id="english" name="fav_language" value="en" (change)="onChange($event)">
+  <label for="english">{{'form.Languages.English' | translate}}</label><br>
+  <input type="radio" id="spanish" name="fav_language" value="es" (change)="onChange($event)">
+  <label for="spanish">{{'form.Languages.Spanish' | translate}}</label><br>
+  <input type="radio" id="fanese" name="fav_language" value="fan" (change)="onChange($event)">
+  <label for="fanese">{{'form.Languages.Fanese' | translate}}</label><br>
+<div>
+
+<br /> <br>
 <user-registration-form />

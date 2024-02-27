@@ -1,0 +1,40 @@
+{
+    "form": {
+        "Name": "Nome",
+        "InvalidName": "Inserire un nome valido!",
+        "Surname": "Cognome",
+        "InvalidSurname": "Inserire un cognome valido!",
+        "EmailAddress": "Indirizzo email",
+        "EmailAddressPlaceholder": "nome.cognome@gmail.com",
+        "InvalidEmail": "Perfavore inserisci una email valida!",
+        "Password": "Password",
+        "InvalidPassword": "Per favore inserisci una password!",
+        "CardNumber": "Numero tessera",
+        "InvalidCardNumber": "Perfavore inserisci un numero tessera valido!",
+        "Role": "Ruolo",
+        "RolePlaceholder": "Scegli ruolo all'interno dell'associazione",
+        "Roles": {
+            "ADMIN": "AMMINISTRATORE",
+            "PRESIDENT": "PRESIDENTE",
+            "MEMBER": "MEMBRO",
+            "ASSOCIATE": "TESSERATO"
+        },
+        "InvalidRole": "Perfavore definisci un ruolo per questo fauno!",
+        "LoginErrorLabel": {
+            "UnknownError": "Si è verificato un errore sconosciuto!",
+            "EmailNotFound": "Attenzione! Email non trovata",
+            "IncorrectPassword": "Attenzione! La password non è corretta"
+        },
+        "Buttons": {
+            "AddUser": "Aggiungi utente",
+            "GoBack": "Torna indietro",
+            "SignIn": "Accedi"
+        },
+        "Languages": {
+            "Italian": "Italiano",
+            "English": "Inglese",
+            "Spanish": "Spagnolo",
+            "Fanese": "Fanese"
+        }
+    }
+}

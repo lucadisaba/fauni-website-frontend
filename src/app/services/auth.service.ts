@@ -9,6 +9,7 @@ import { clearUser } from '../store/user/user.actions';
 import { ROLES } from '../../models/role.enum';
 import { User } from '../../models/user.model';
 import { FormGroup } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,7 @@ import { FormGroup } from '@angular/forms';
 export class AuthService {
   #http = inject(HttpClient);
   #store = inject(Store<AppState>);
+  #translateService = inject(TranslateService)
 
   // l'idea è quella di emettere lo user loggato opp. che ha fatto logout
   // Ci dice in sintesi quando lo stato dello user è cambiato
@@ -94,14 +96,15 @@ export class AuthService {
   // }
 
   handleError(errorRes: HttpErrorResponse): string {
-    let errorMessage = 'Si è verificato un errore sconosciuto!';
+    let errorMessage = this.#translateService.instant('form.LoginErrorLabel.UnknownError')
+;
     switch (errorRes.error.message) {
       case 'EMAIL_NOT_FOUND':
-        errorMessage = 'Attenzione! Email non trovata';
+        errorMessage = this.#translateService.instant('form.LoginErrorLabel.EmailNotFound');
         break;
 
       case 'INVALID_PASSWORD':
-        errorMessage = 'Attenzione! La password non è corretta';
+        errorMessage = this.#translateService.instant('form.LoginErrorLabel.IncorrectPassword');
         break;
     }
     return errorMessage;

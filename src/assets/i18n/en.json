@@ -1,0 +1,40 @@
+{
+    "form": {
+        "Name": "Name",
+        "InvalidName": "Please insert a valid name!",
+        "Surname": "Surname",
+        "InvalidSurname": "Please insert a valid surname!",
+        "EmailAddress": "Email address",
+        "EmailAddressPlaceholder": "name.surname@gmail.com",
+        "InvalidEmail": "Please insert a valid email!",
+        "Password": "Password",
+        "InvalidPassword": "Please enter password!",
+        "CardNumber": "CardNumber",
+        "InvalidCardNumber": "Please insert a valid card number!",
+        "Role": "Role",
+        "RolePlaceholder": "Choose role within the association",
+        "Roles": {
+            "ADMIN": "ADMIN",
+            "PRESIDENT": "PRESIDENT",
+            "MEMBER": "MEMBER",
+            "ASSOCIATE": "ASSOCIATE"
+        },
+        "InvalidRole": "Please define a role for this fauno!",
+        "LoginErrorLabel": {
+            "UnknownError": "An unknown error occurred!",
+            "EmailNotFound": "Attention! Email not found",
+            "IncorrectPassword": "Attention! Incorrect password"
+        },
+        "Buttons": {
+            "SignIn": "Sign in",
+            "AddUser": "Add user",
+            "GoBack": "Go back"
+        },
+        "Languages": {
+            "Italian": "Italian",
+            "English": "English",
+            "Spanish": "Spanish",
+            "Fanese": "Fanese"
+        }
+    }
+}

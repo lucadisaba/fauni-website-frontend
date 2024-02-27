@@ -3,6 +3,7 @@ import { UserManagementComponent } from './components/user-management/user-manag
 import { UserUpdationComponent } from './components/user-updation/user-updation.component';
 import { AuthPageComponent } from './pages/auth-page/auth-page.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
+import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [
   {
@@ -26,10 +27,12 @@ export const routes: Routes = [
   {
     path: 'user-management',
     component: UserManagementComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'user-updation',
     component: UserUpdationComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: '**',

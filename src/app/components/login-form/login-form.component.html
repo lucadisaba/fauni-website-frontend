@@ -4,25 +4,25 @@
 </div>
 <form class="px-2" [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmit()">
   <div class="form-group">
-    <label for="LoginFormControlInputEmail"> Indirizzo email</label>
-    <input class="form-control" id="LoginFormControlInputEmail" placeholder="nome@example.com"
+    <label for="LoginFormControlInputEmail"> {{'form.EmailAddress' | translate}}</label>
+    <input class="form-control" id="LoginFormControlInputEmail" placeholder="{{'form.EmailAddressPlaceholder' | translate}}"
       formControlName="email" />
   </div>
   <!-- Checking tramite stringa ad oggetti da get da evitare  -->
   <span class="help-block" *ngIf="loginForm.controls.email.invalid && loginForm.controls.email.touched">
-    Per favore inserisci una email valida!</span>
+    {{'form.InvalidEmail' | translate}}</span>
   <div class="form-group">
     <label for="LoginFormControlInputPassword">
-      Password <a style="color: blue">Dimenticato la password?</a></label>
+      {{'form.Password' | translate}} </label>
     <input class="form-control" id="LoginFormControlInputPassword" formControlName="password" />
   </div>
   <span class="help-block" *ngIf="
       loginForm.controls.password.invalid && loginForm.controls.password.touched
     ">
-    Per favore inserisci una password!</span>
+    {{'form.InvalidPassword' | translate}}</span>
   <br />
   <button class="btn btn-success" type="submit" [disabled]="loginForm.invalid">
-    Sign in
+    {{'form.Buttons.SignIn' | translate}}
   </button>
   <br /><br>
   <asl-google-signin-button type='standard' size='medium'></asl-google-signin-button>

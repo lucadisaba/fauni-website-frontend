@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app.state';
 import { selectUserData } from '../../store/user/user.selectors';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'home-page',
@@ -18,8 +19,10 @@ export class HomePageComponent {
   #store = inject(Store<AppState>);
   #authService = inject(AuthService);
   user$ = this.#store.select(selectUserData);
+  #route = inject(Router);
 
   logout() {
     this.#authService.logout();
+    this.#route.navigate(['/auth'])
   }
 }
